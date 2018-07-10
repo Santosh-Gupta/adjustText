@@ -419,10 +419,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             all the optimization is done just for plotting the connecting arrows
             if required
     """
-    print("Testing") ###
-    
     plt.draw()
-    
     if ax is None:
         ax = plt.gca()
     r = get_renderer(ax.get_figure())
@@ -467,7 +464,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                              it a flat list of matplotlib objects?")
             return
         text_from_objects = True
-    
     for text in texts:
         text.set_va(va)
         text.set_ha(ha)
@@ -487,16 +483,15 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                                          add_bboxes=add_bboxes,
                                          direction=autoalign, renderer=r,
                                          ax=ax)
-    
+
     if save_steps:
         if add_step_numbers:
             plt.title('Autoaligned')
         plt.savefig('%s%s.%s' % (save_prefix,
                             '000b', save_format), format=save_format, dpi=150)
-        
     elif on_basemap:
         ax.draw(r)
-    
+
     texts = repel_text_from_axes(texts, ax, renderer=r, expand=expand_points)
     history = [(np.inf, np.inf)]*10
     for i in xrange(lim):
@@ -553,14 +548,12 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         history.append((qx, qy))
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
-
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
-
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
