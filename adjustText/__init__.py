@@ -332,7 +332,7 @@ def float_to_tuple(a):
             raise TypeError('Force values must be castable to floats')
         return b
 
-def adjust_text_altered(texts, x=None, y=None, add_objects=None, ax=None,
+def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                 expand_text=(1.05, 1.2), expand_points=(1.05, 1.2),
                 expand_objects=(1.05, 1.2), expand_align=(1.05, 1.2),
                 autoalign='xy',  va='center', ha='center',
