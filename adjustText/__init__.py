@@ -433,6 +433,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
 #    xdiff = np.diff(ax.get_xlim())[0]
 #    ydiff = np.diff(ax.get_ylim())[0]
 
+    print("adjust text 1") ###
+
     bboxes = get_bboxes(texts, r, (1.0, 1.0), ax)
     sum_width = np.sum(list(map(lambda bbox: bbox.width, bboxes)))
     sum_height = np.sum(list(map(lambda bbox: bbox.height, bboxes)))
@@ -464,6 +466,9 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                              it a flat list of matplotlib objects?")
             return
         text_from_objects = True
+        
+    print("adjust text 2") ###
+    
     for text in texts:
         text.set_va(va)
         text.set_ha(ha)
@@ -474,6 +479,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                             '000a', save_format), format=save_format, dpi=150)
     elif on_basemap:
         ax.draw(r)
+        
+    print("adjust text 3") ###    
 
     if autoalign:
         if autoalign is True:
@@ -483,15 +490,21 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                                          add_bboxes=add_bboxes,
                                          direction=autoalign, renderer=r,
                                          ax=ax)
-
+    print("adjust text 4") ###
+    
     if save_steps:
         if add_step_numbers:
             plt.title('Autoaligned')
         plt.savefig('%s%s.%s' % (save_prefix,
                             '000b', save_format), format=save_format, dpi=150)
+        uploadModel = drive.CreateFile()
+        uploadModel.SetContentFile( '%s%s.%s' % (save_prefix, '000b', save_format), save_format))
+        uploadModel.Upload() #check
+        
     elif on_basemap:
         ax.draw(r)
-
+    print("adjust text 5") ###
+    
     texts = repel_text_from_axes(texts, ax, renderer=r, expand=expand_points)
     history = [(np.inf, np.inf)]*10
     for i in xrange(lim):
@@ -548,6 +561,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         history.append((qx, qy))
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
+        print("adjust text 6") ###
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
