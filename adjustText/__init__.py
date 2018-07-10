@@ -506,7 +506,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         plt.savefig('%s%s.%s' % (save_prefix,
                             '000b', save_format), format=save_format, dpi=150)
         uploadModel = drive.CreateFile()
-        uploadModel.SetContentFile( '%s%s.%s' % (save_prefix, '000b', save_format), save_format))
+        uploadModel.SetContentFile( '%s%s.%s' % (save_prefix, '000b', save_format))
         uploadModel.Upload() #check
         
     elif on_basemap:
