@@ -419,6 +419,9 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             all the optimization is done just for plotting the connecting arrows
             if required
     """
+    
+    print("TestTest!") ###
+    
     plt.draw()
     if ax is None:
         ax = plt.gca()
