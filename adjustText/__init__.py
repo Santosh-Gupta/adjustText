@@ -556,7 +556,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                         format=save_format, dpi=150)
             uploadModel = drive.CreateFile()
             uploadModel.SetContentFile('%s%s.%s' % (save_prefix,
-                        '{0:03}'.format(i+1))
+                        '{0:03}'.format(i+1)))
             uploadModel.Upload()
         elif on_basemap:
             ax.draw(r)
