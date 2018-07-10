@@ -419,13 +419,21 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             all the optimization is done just for plotting the connecting arrows
             if required
     """
+    print("adjust text -1") ###
+    
     plt.draw()
+    
+    print("adjust text 0") ###
+    
     if ax is None:
         ax = plt.gca()
     r = get_renderer(ax.get_figure())
+    print("adjust text .5") 
     orig_xy = [get_text_position(text, ax=ax) for text in texts]
+    print("adjust text .75") 
     orig_x = [xy[0] for xy in orig_xy]
     orig_y = [xy[1] for xy in orig_xy]
+    print("adjust text .85") 
     force_objects = float_to_tuple(force_objects)
     force_text = float_to_tuple(force_text)
     force_points = float_to_tuple(force_points)
