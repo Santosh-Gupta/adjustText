@@ -557,7 +557,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             uploadModel = drive.CreateFile()
             uploadModel.SetContentFile( '%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format))
-            uploadModel.Upload()
+            uploadModel.Upload() #check
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
