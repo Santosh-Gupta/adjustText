@@ -2,12 +2,12 @@
 
 from setuptools import setup
 
-setup(name='adjustText',
+setup(name='adjustTextAltered',
       version='0.7.3',
       description='Iteratively adjust text position in matplotlib plots to minimize overlaps',
       author='Ilya Flyamer',
       author_email='flyamer@gmail.com',
-      url='https://github.com/Phlya/adjustText',
-      packages=['adjustText'],
+      url='https://github.com/Santosh-Gupta/adjustText',
+      packages=['adjustTextAltered'],
       install_requires=['numpy', 'matplotlib']
      )
