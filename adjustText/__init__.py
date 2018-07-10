@@ -419,29 +419,22 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             all the optimization is done just for plotting the connecting arrows
             if required
     """
-    print("adjust text -1") ###
+    print("Testing") ###
     
     plt.draw()
-    
-    print("adjust text 0") ###
     
     if ax is None:
         ax = plt.gca()
     r = get_renderer(ax.get_figure())
-    print("adjust text .5") 
     orig_xy = [get_text_position(text, ax=ax) for text in texts]
-    print("adjust text .75") 
     orig_x = [xy[0] for xy in orig_xy]
     orig_y = [xy[1] for xy in orig_xy]
-    print("adjust text .85") 
     force_objects = float_to_tuple(force_objects)
     force_text = float_to_tuple(force_text)
     force_points = float_to_tuple(force_points)
 
 #    xdiff = np.diff(ax.get_xlim())[0]
 #    ydiff = np.diff(ax.get_ylim())[0]
-
-    print("adjust text 1") ###
 
     bboxes = get_bboxes(texts, r, (1.0, 1.0), ax)
     sum_width = np.sum(list(map(lambda bbox: bbox.width, bboxes)))
@@ -474,8 +467,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                              it a flat list of matplotlib objects?")
             return
         text_from_objects = True
-        
-    print("adjust text 2") ###
     
     for text in texts:
         text.set_va(va)
@@ -487,8 +478,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                             '000a', save_format), format=save_format, dpi=150)
     elif on_basemap:
         ax.draw(r)
-        
-    print("adjust text 3") ###    
 
     if autoalign:
         if autoalign is True:
@@ -498,20 +487,15 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                                          add_bboxes=add_bboxes,
                                          direction=autoalign, renderer=r,
                                          ax=ax)
-    print("adjust text 4") ###
     
     if save_steps:
         if add_step_numbers:
             plt.title('Autoaligned')
         plt.savefig('%s%s.%s' % (save_prefix,
                             '000b', save_format), format=save_format, dpi=150)
-        uploadModel = drive.CreateFile()
-        uploadModel.SetContentFile( '%s%s.%s' % (save_prefix, '000b', save_format))
-        uploadModel.Upload() #check
         
     elif on_basemap:
         ax.draw(r)
-    print("adjust text 5") ###
     
     texts = repel_text_from_axes(texts, ax, renderer=r, expand=expand_points)
     history = [(np.inf, np.inf)]*10
@@ -569,16 +553,14 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         history.append((qx, qy))
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
-        print("adjust text 6") ###
+
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
-            uploadModel = drive.CreateFile()
-            uploadModel.SetContentFile( '%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
-            uploadModel.Upload() #check
+
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
