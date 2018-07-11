@@ -557,6 +557,10 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
+            print('test)
+            uploadModel = drive.CreateFile()
+            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
+            uploadModel.Upload()
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
@@ -584,9 +588,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
             print('test')
-            uploadModel = drive.CreateFile()
-            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
-            uploadModel.Upload()
     elif on_basemap:
         ax.draw(r)
 
