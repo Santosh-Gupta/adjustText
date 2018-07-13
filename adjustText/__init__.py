@@ -15,6 +15,7 @@ auth.authenticate_user()
 gauth = GoogleAuth()
 gauth.credentials = GoogleCredentials.get_application_default()
 drive = GoogleDrive(gauth)
+uploadModel = drive.CreateFile()
 
 if sys.version_info >= (3, 0):
     xrange = range
@@ -568,6 +569,9 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
+            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
+            uploadModel.Upload()
+            
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
