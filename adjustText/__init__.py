@@ -569,6 +569,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
+            print('step ', i)
             uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
             uploadModel.Upload()
             
@@ -598,7 +599,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
-            print('test')
     elif on_basemap:
         ax.draw(r)
 
