@@ -561,12 +561,30 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         history.append((qx, qy))
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
+        
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
+            
+            if 'arrowprops' in kwargs:
+                bboxes = get_bboxes(texts, r, (1, 1), ax)
+                kwap = kwargs.pop('arrowprops')
+                for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+                    ap = {'patchA':text} # Ensure arrow is clipped by the text
+                    ap.update(kwap) # Add arrowprops from kwargs
+                    ax.annotate("", # Add an arrow from the text to the point
+                                xy = (orig_xy[j]),
+                                xytext=get_midpoint(bbox),
+                                arrowprops=ap,
+                                *args, **kwargs)
+            
+            print('step ', i)
+            uploadModel = drive.CreateFile()
+            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
+            uploadModel.Upload()
             
         elif on_basemap:
             ax.draw(r)
@@ -594,10 +612,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
-            print('step ', i)
-            uploadModel = drive.CreateFile()
-            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
-            uploadModel.Upload()
+
     elif on_basemap:
         ax.draw(r)
 
