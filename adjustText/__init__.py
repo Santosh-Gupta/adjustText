@@ -520,7 +520,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         print('step ', i)
         uploadModel = drive.CreateFile()
         uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '000b' , save_format))
-        uploadModel.Upload()        
+        uploadModel.Upload()
+        os.remove('%s%s.%s' % (save_prefix, '000b' , save_format))
         
     elif on_basemap:
         ax.draw(r)
@@ -605,6 +606,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             uploadModel = drive.CreateFile()
             uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
             uploadModel.Upload()
+            os.remove('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
             
         elif on_basemap:
             ax.draw(r)
