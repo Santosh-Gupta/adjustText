@@ -127,6 +127,7 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         va = ['bottom', 'top', 'center']
     alignment = list(product(ha, va))
 #    coords = np.array(zip(x, y))
+    print("part1") ###
     for i, text in enumerate(texts):
 #        tcoords = np.array(text.get_position()).T
 #        nonself_coords = coords[~np.all(coords==tcoords, axis=1)]
@@ -152,6 +153,7 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             else:
                 axout = 0
             counts.append((axout, c, intersections))
+        print("part2") ###
         # Most important: prefer alignments that keep the text inside the axes.
         # If tied, take the alignments that minimize the number of x, y points
         # contained inside the text.
@@ -162,8 +164,10 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             text.set_ha(alignment[a][0])
         if 'y' in direction:
             text.set_va(alignment[a][1])
+        print("part3") ###    
         bboxes[i] = text.get_window_extent(r).expanded(*expand).\
                                        transformed(ax.transData.inverted())
+        print("part4") ###
     return texts
 
 def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
