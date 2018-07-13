@@ -164,7 +164,8 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             text.set_va(alignment[a][1])   
         bboxes[i] = text.get_window_extent(r).expanded(*expand).\
                                        transformed(ax.transData.inverted())
-        print("part ", i) ###
+        if i % 100 == 0:
+            print("part ", i) ###
     return texts
 
 def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
