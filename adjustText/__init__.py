@@ -113,10 +113,9 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         ax = plt.gca()
     if renderer is None:
         r = get_renderer(ax.get_figure())
-    
-    print('optimal step 1') ###
     else:
         r = renderer
+    print('optimal step 1') ###
     xmin, xmax = sorted(ax.get_xlim())
     ymin, ymax = sorted(ax.get_ylim())
     bboxes = get_bboxes(texts, r, expand, ax=ax)
