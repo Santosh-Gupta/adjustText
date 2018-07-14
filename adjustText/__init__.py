@@ -113,11 +113,15 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         ax = plt.gca()
     if renderer is None:
         r = get_renderer(ax.get_figure())
+    
+    print('optimal step 1') ###
     else:
         r = renderer
     xmin, xmax = sorted(ax.get_xlim())
     ymin, ymax = sorted(ax.get_ylim())
     bboxes = get_bboxes(texts, r, expand, ax=ax)
+    
+    print('optimal step 2') ###
     if 'x' not in direction:
         ha = ['']
     else:
@@ -128,11 +132,14 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
         va = ['bottom', 'top', 'center']
     alignment = list(product(ha, va))
 #    coords = np.array(zip(x, y))
+    print('optimal step 3') ###
     for i, text in enumerate(texts):
 #        tcoords = np.array(text.get_position()).T
 #        nonself_coords = coords[~np.all(coords==tcoords, axis=1)]
 #        nonself_x, nonself_y = np.split(nonself_coords, 2, axis=1)
         counts = []
+        if i % 100 == 0:
+            print('optimal step 4 part', i) ###
         for h, v in alignment:
             if h:
                 text.set_ha(h)
@@ -153,6 +160,7 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             else:
                 axout = 0
             counts.append((axout, c, intersections))
+            print("optimal step 4-2 part', h)
         # Most important: prefer alignments that keep the text inside the axes.
         # If tied, take the alignments that minimize the number of x, y points
         # contained inside the text.
@@ -163,10 +171,12 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             text.set_ha(alignment[a][0])
         if 'y' in direction:
             text.set_va(alignment[a][1])   
+        print('optimal step 6') ###
         bboxes[i] = text.get_window_extent(r).expanded(*expand).\
                                        transformed(ax.transData.inverted())
         if i % 100 == 0:
-            print("part ", i) ###
+            print("optimal part 4-3 part", i) ###
+    print('optimal step 7') ###             
     return texts
 
 def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
