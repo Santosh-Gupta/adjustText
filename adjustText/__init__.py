@@ -169,12 +169,8 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             text.set_ha(alignment[a][0])
         if 'y' in direction:
             text.set_va(alignment[a][1])   
-        print('optimal step 6') ###
         bboxes[i] = text.get_window_extent(r).expanded(*expand).\
-                                       transformed(ax.transData.inverted())
-        if i % 100 == 0:
-            print("optimal part 4-3 part", i) ###
-    print('optimal step 7') ###             
+                                       transformed(ax.transData.inverted())            
     return texts
 
 def repel_text(texts, renderer=None, ax=None, expand=(1.2, 1.2),
