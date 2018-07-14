@@ -159,7 +159,6 @@ def optimally_align_text(x, y, texts, expand=(1., 1.), add_bboxes=[],
             else:
                 axout = 0
             counts.append((axout, c, intersections))
-            print('optimal step 4-2 part', h)
         # Most important: prefer alignments that keep the text inside the axes.
         # If tied, take the alignments that minimize the number of x, y points
         # contained inside the text.
