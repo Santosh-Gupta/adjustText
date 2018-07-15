@@ -4,6 +4,7 @@ from matplotlib import pyplot as plt
 from itertools import product
 import numpy as np
 from operator import itemgetter
+!pip install pillow
 
 if sys.version_info >= (3, 0):
     xrange = range
