@@ -5,7 +5,6 @@ from itertools import product
 import numpy as np
 from operator import itemgetter
 
-
 import os
 
 from google.colab import files
@@ -13,6 +12,10 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from google.colab import auth
 from oauth2client.client import GoogleCredentials
+
+from pip._internal import main
+
+main(['install', 'pillow'])
 
 auth.authenticate_user()
 gauth = GoogleAuth()
