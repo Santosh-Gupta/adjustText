@@ -590,10 +590,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
-            plt.savefig('%s%s.%s' % (save_prefix,
-                        '{0:03}'.format(i+1), save_format),
-                        format=save_format, dpi=150, bbox_inches='tight')
-            
+                
             if 'arrowprops' in kwargs:
                 bboxes = get_bboxes(texts, r, (1, 1), ax)
                 kwap = kwargs.pop('arrowprops')
@@ -604,7 +601,10 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                                 xy = (orig_xy[j]),
                                 xytext=get_midpoint(bbox),
                                 arrowprops=ap,
-                                *args, **kwargs)
+                                *args, **kwargs)    
+            plt.savefig('%s%s.%s' % (save_prefix,
+                        '{0:03}'.format(i+1), save_format),
+                        format=save_format, dpi=150, bbox_inches='tight')
             
             print('step ', i)
             uploadModel = drive.CreateFile()
