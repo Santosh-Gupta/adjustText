@@ -4,6 +4,21 @@ from matplotlib import pyplot as plt
 from itertools import product
 import numpy as np
 from operator import itemgetter
+!pip install pillow
+
+import os
+
+from google.colab import files
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
+
+auth.authenticate_user()
+gauth = GoogleAuth()
+gauth.credentials = GoogleCredentials.get_application_default()
+drive = GoogleDrive(gauth)
+uploadModel = drive.CreateFile()
 
 if sys.version_info >= (3, 0):
     xrange = range
@@ -555,9 +570,28 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                    bboxes = bboxes, ax=ax)
             if add_step_numbers:
                 plt.title(i+1)
+            if 'arrowprops' in kwargs:
+                bboxes = get_bboxes(texts, r, (1, 1), ax)
+                kwap = kwargs.pop('arrowprops')
+                for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+                    ap = {'patchA':text} # Ensure arrow is clipped by the text
+                    ap.update(kwap) # Add arrowprops from kwargs
+                    ax.annotate("", # Add an arrow from the text to the point
+                        xy = (orig_xy[j]), \
+                        xytext=get_midpoint(bbox), \
+                        arrowprops=ap, \
+                        *args, **kwargs) 
+            
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, dpi=150)
+            
+            print('step ', i)
+            uploadModel = drive.CreateFile()
+            uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
+            uploadModel.Upload()
+            os.remove('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
+            
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
