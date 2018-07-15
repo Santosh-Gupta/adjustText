@@ -590,6 +590,11 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                         format=save_format, dpi=150)
             
             print('step ', i)
+            
+            auth.authenticate_user()
+            gauth = GoogleAuth()
+            gauth.credentials = GoogleCredentials.get_application_default()
+            
             uploadModel = drive.CreateFile()
             uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
             uploadModel.Upload()
