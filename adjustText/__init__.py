@@ -594,6 +594,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             auth.authenticate_user()
             gauth = GoogleAuth()
             gauth.credentials = GoogleCredentials.get_application_default()
+            drive = GoogleDrive(gauth)
             if gauth.access_token_expired:
              # Refresh them if expired
                 print("Google Drive Token Expired, Refreshing")
@@ -604,7 +605,14 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             
             uploadModel = drive.CreateFile()
             uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
-            uploadModel.Upload()
+            try:
+                uploadModel.Upload()
+            except:
+                gauth.Refresh()
+                auth.authenticate_user()
+                gauth = GoogleAuth()
+                gauth.credentials = GoogleCredentials.get_application_default()
+                drive = GoogleDrive(gauth)
             os.remove('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
             
         elif on_basemap:
