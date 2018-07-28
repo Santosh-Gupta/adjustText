@@ -596,7 +596,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             gauth.credentials = GoogleCredentials.get_application_default()
             if gauth.access_token_expired:
              # Refresh them if expired
-                print "Google Drive Token Expired, Refreshing"
+                print( "Google Drive Token Expired, Refreshing")
                 gauth.Refresh()
             else:
                 # Initialize the saved creds
