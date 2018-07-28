@@ -587,7 +587,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
-                        format=save_format)
+                        format=save_format, bbox_inches='tight')
             
             print('step ', i)
             
@@ -642,7 +642,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
             plt.title(i+1)
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
-                        format=save_format)
+                        format=save_format, bbox_inches='tight')
     elif on_basemap:
         ax.draw(r)
 
