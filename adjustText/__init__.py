@@ -5,7 +5,10 @@ from itertools import product
 import numpy as np
 from operator import itemgetter
 import os
-!pip install pillow
+
+from pip._internal import main
+
+main(['install', 'pillow'])
 
 from google.colab import files
 from pydrive.auth import GoogleAuth
