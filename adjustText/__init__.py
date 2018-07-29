@@ -594,7 +594,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                 bboxes = get_bboxes(texts, r, (1, 1), ax)
                 kwap = kwargs.pop('arrowprops')
                 for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-                    ap = {'patchA':text} # Ensure arrow is clipped by the text
+                    #ap = {'patchA':text} # Ensure arrow is clipped by the text
+                    ap = {'patchA':None} # Ensure arrow is clipped by the text
                     ap.update(kwap) # Add arrowprops from kwargs
                     ax.annotate("", # Add an arrow from the text to the point
                                 xy = (orig_xy[j]),
@@ -642,7 +643,8 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         bboxes = get_bboxes(texts, r, (1, 1), ax)
         kwap = kwargs.pop('arrowprops')
         for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-            ap = {'patchA':text} # Ensure arrow is clipped by the text
+            #ap = {'patchA':text} # Ensure arrow is clipped by the text
+            ap = {'patchA':None} # Ensure arrow is clipped by the text
             ap.update(kwap) # Add arrowprops from kwargs
             ax.annotate("", # Add an arrow from the text to the point
                         xy = (orig_xy[j]),
