@@ -525,11 +525,6 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                                 xytext=get_midpoint(bbox),
                                 arrowprops=ap,
                                 *args, **kwargs)
-            
-        uploadModel = drive.CreateFile()
-        uploadModel.SetContentFile('%s%s.%s' % (save_prefix, '000b' , save_format))
-        uploadModel.Upload()
-        os.remove('%s%s.%s' % (save_prefix, '000b' , save_format))
         
     elif on_basemap:
         ax.draw(r)
