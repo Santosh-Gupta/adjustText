@@ -514,17 +514,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         plt.savefig('%s%s.%s' % (save_prefix,
                             '000b', save_format), format=save_format, bbox_inches='tight')
         
-        if 'arrowprops' in kwargs:
-                bboxes = get_bboxes(texts, r, (1, 1), ax)
-                kwap = kwargs.pop('arrowprops')
-                for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-                    ap = {'patchA':text} # Ensure arrow is clipped by the text
-                    ap.update(kwap) # Add arrowprops from kwargs
-                    ax.annotate("", # Add an arrow from the text to the point
-                                xy = (orig_xy[j]),
-                                xytext=get_midpoint(bbox),
-                                arrowprops=ap,
-                                *args, **kwargs)
+
         
     elif on_basemap:
         ax.draw(r)
@@ -585,23 +575,23 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         history.append((qx, qy))
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
+         
+        if 'arrowprops' in kwargs:
+            bboxes = get_bboxes(texts, r, (1, 1), ax)
+            kwap = kwargs.pop('arrowprops')
+            for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+                #ap = {'patchA':text} # Ensure arrow is clipped by the text
+                ap = {'patchA':None} # Ensure arrow is clipped by the text
+                ap.update(kwap) # Add arrowprops from kwargs
+                ax.annotate("", # Add an arrow from the text to the point
+                        xy = (orig_xy[j]),
+                        xytext=get_midpoint(bbox),
+                        arrowprops=ap,
+                        *args, **kwargs) 
         
         if save_steps:
             if add_step_numbers:
                 plt.title(i+1)
-                
-            if 'arrowprops' in kwargs:
-                bboxes = get_bboxes(texts, r, (1, 1), ax)
-                kwap = kwargs.pop('arrowprops')
-                for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-                    #ap = {'patchA':text} # Ensure arrow is clipped by the text
-                    ap = {'patchA':None} # Ensure arrow is clipped by the text
-                    ap.update(kwap) # Add arrowprops from kwargs
-                    ax.annotate("", # Add an arrow from the text to the point
-                                xy = (orig_xy[j]),
-                                xytext=get_midpoint(bbox),
-                                arrowprops=ap,
-                                *args, **kwargs)    
             plt.savefig('%s%s.%s' % (save_prefix,
                         '{0:03}'.format(i+1), save_format),
                         format=save_format, bbox_inches='tight')
