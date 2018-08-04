@@ -576,18 +576,31 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         move_texts(texts, dx, dy,
                    bboxes = get_bboxes(texts, r, (1, 1), ax), ax=ax)
          
+#         if 'arrowprops' in kwargs:
+#             bboxes = get_bboxes(texts, r, (1, 1), ax)
+#             kwap = kwargs.get('arrowprops')
+#             for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+#                 ap = {'patchA':text} # Ensure arrow is clipped by the text
+#                 #ap = {'patchA':None} # Ensure arrow is clipped by the text
+#                 ap.update(kwap) # Add arrowprops from kwargs
+#                 ax.annotate("", # Add an arrow from the text to the point
+#                         xy = (orig_xy[j]),
+#                         xytext=get_midpoint(bbox),
+#                         arrowprops=ap,
+#                         *args, **kwargs) 
+
         if 'arrowprops' in kwargs:
-            bboxes = get_bboxes(texts, r, (1, 1), ax)
-            kwap = kwargs.get('arrowprops')
-            for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-                ap = {'patchA':text} # Ensure arrow is clipped by the text
-                #ap = {'patchA':None} # Ensure arrow is clipped by the text
-                ap.update(kwap) # Add arrowprops from kwargs
-                ax.annotate("", # Add an arrow from the text to the point
-                        xy = (orig_xy[j]),
-                        xytext=get_midpoint(bbox),
-                        arrowprops=ap,
-                        *args, **kwargs) 
+            kwap = kwargs.pop('arrowprops')
+            ap = {'patchA':text} # Ensure arrow is clipped by the text
+            ap.update(kwap) # Add arrowprops from kwargs
+          
+        bboxes = get_bboxes(texts, r, (1, 1), ax) #Will give error if you didn't put arrows
+        for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+            ax.annotate("", # Add an arrow from the text to the point
+                    xy = (orig_xy[j]),
+                    xytext=get_midpoint(bbox),
+                    arrowprops=ap,
+                    *args, **kwargs) 
         
         if save_steps:
             if add_step_numbers:
@@ -629,18 +642,32 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         if (qx < precision_x and qy < precision_y) or np.all([qx, qy] >= histm):
             break
         # Now adding arrows from texts to their original locations if required
+#     if 'arrowprops' in kwargs:
+#         bboxes = get_bboxes(texts, r, (1, 1), ax)
+#         kwap = kwargs.get('arrowprops')
+#         for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+#             ap = {'patchA':text} # Ensure arrow is clipped by the text
+#             #ap = {'patchA':None} # Ensure arrow is clipped by the text
+#             ap.update(kwap) # Add arrowprops from kwargs
+#             ax.annotate("", # Add an arrow from the text to the point
+#                         xy = (orig_xy[j]),
+#                         xytext=get_midpoint(bbox),
+#                         arrowprops=ap,
+#                         *args, **kwargs)
+
     if 'arrowprops' in kwargs:
-        bboxes = get_bboxes(texts, r, (1, 1), ax)
-        kwap = kwargs.get('arrowprops')
-        for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-            ap = {'patchA':text} # Ensure arrow is clipped by the text
-            #ap = {'patchA':None} # Ensure arrow is clipped by the text
-            ap.update(kwap) # Add arrowprops from kwargs
-            ax.annotate("", # Add an arrow from the text to the point
-                        xy = (orig_xy[j]),
-                        xytext=get_midpoint(bbox),
-                        arrowprops=ap,
-                        *args, **kwargs)
+        kwap = kwargs.pop('arrowprops')
+        ap = {'patchA':text} # Ensure arrow is clipped by the text
+        ap.update(kwap) # Add arrowprops from kwargs
+
+    bboxes = get_bboxes(texts, r, (1, 1), ax) #Will give error if you didn't put arrows
+    for j, (bbox, text) in enumerate(zip(bboxes, texts)):
+        ax.annotate("", # Add an arrow from the text to the point
+                xy = (orig_xy[j]),
+                xytext=get_midpoint(bbox),
+                arrowprops=ap,
+                *args, **kwargs) 
+
 
     if save_steps:
         if add_step_numbers:
