@@ -596,7 +596,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
           
         bboxes = get_bboxes(texts, r, (1, 1), ax) #Will give error if you didn't put arrows
         for j, (bbox, text) in enumerate(zip(bboxes, texts)):
-            ax.annotate("", # Add an arrow from the text to the point
+            drawArrow = ax.annotate("", # Add an arrow from the text to the point
                     xy = (orig_xy[j]),
                     xytext=get_midpoint(bbox),
                     arrowprops=ap,
@@ -633,7 +633,9 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
                 gauth.credentials = GoogleCredentials.get_application_default()
                 drive = GoogleDrive(gauth)
             os.remove('%s%s.%s' % (save_prefix, '{0:03}'.format(i+1), save_format))
-            
+        
+        drawArrow.remove() #removed arrows otherwise old arrows remain
+        
         elif on_basemap:
             ax.draw(r)
         # Stop if we've reached the precision threshold, or if the x and y displacement
