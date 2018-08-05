@@ -643,6 +643,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         #ax.texts.remove(drawArrow) #removed arrows otherwise old arrows remain
         ax.annotate = []
         plt.draw()
+        plt.canvas.draw()
         
         # Stop if we've reached the precision threshold, or if the x and y displacement
         # are both greater than the max over the last 10 iterations (suggesting a
