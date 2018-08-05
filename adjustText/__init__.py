@@ -641,7 +641,7 @@ def adjust_text(texts, x=None, y=None, add_objects=None, ax=None,
         
         drawArrow.remove() #removed arrows otherwise old arrows remain
         #ax.texts.remove(drawArrow) #removed arrows otherwise old arrows remain
-        ax.annotate = []
+        #ax.annotate = []
         plt.draw()
         plt.canvas.draw()
         
